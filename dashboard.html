@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#064e3b">
+  <meta name="description" content="Restaurant website dashboard preview.">
+  <title>Restaurant Dashboard | QuickMenu Zambia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="dashboard.js" defer></script>
+</head>
+<body class="dashboard-page">
+  <div class="dashboard-shell">
+    <button class="dashboard-backdrop" type="button" data-sidebar-backdrop aria-label="Close dashboard navigation" hidden></button>
+    <aside class="dashboard-sidebar" id="dashboard-sidebar" aria-label="Dashboard navigation" aria-hidden="false">
+      <div class="dashboard-sidebar-head">
+        <a class="brand dashboard-brand" href="index.html" aria-label="QuickMenu Zambia home"><span class="brand-mark quickmenu-mark">Q<span>.</span></span><span><span class="brand-name">QuickMenu<span class="brand-accent">.</span></span><span class="brand-caption">ZAMBIA</span></span></a>
+        <button class="button button-outline button-small dashboard-sidebar-close" type="button" data-sidebar-close aria-label="Close dashboard navigation">×</button>
+      </div>
+      <nav class="dashboard-nav" aria-label="Restaurant dashboard">
+        <a class="dashboard-nav-link active" href="#dashboard-home" aria-current="page"><span aria-hidden="true">⌂</span>Dashboard</a>
+        <a class="dashboard-nav-link" href="#my-website"><span aria-hidden="true">↗</span>My Website</a>
+        <a class="dashboard-nav-link" href="#menu-management"><span aria-hidden="true">▤</span>Menu</a>
+        <a class="dashboard-nav-link" href="#gallery-management"><span aria-hidden="true">▧</span>Gallery</a>
+        <a class="dashboard-nav-link" href="#orders"><span aria-hidden="true">▣</span>Orders <span class="catering-badge">Coming Soon</span></a>
+        <a class="dashboard-nav-link" href="#qr-code"><span aria-hidden="true">▦</span>QR Code</a>
+        <a class="dashboard-nav-link" href="#analytics"><span aria-hidden="true">▥</span>Analytics <span class="catering-badge">Coming Soon</span></a>
+        <a class="dashboard-nav-link" href="#settings"><span aria-hidden="true">⚙</span>Settings</a>
+      </nav>
+      <button class="dashboard-nav-link dashboard-logout" type="button" data-preview-action="Logout is a preview-only control. Authentication is not enabled."><span aria-hidden="true">↪</span>Logout</button>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button class="button button-outline button-small dashboard-menu-toggle" type="button" data-sidebar-toggle aria-controls="dashboard-sidebar" aria-expanded="false" aria-label="Open dashboard navigation"><span aria-hidden="true">☰</span></button>
+        <a class="dashboard-mobile-brand" href="index.html">QuickMenu<span>.</span> <small>ZAMBIA</small></a>
+        <span class="dashboard-preview-label">Dashboard Preview</span>
+      </header>
+
+      <main class="dashboard-content">
+        <p class="dashboard-note dashboard-global-notice" data-dashboard-notice aria-live="polite" hidden></p>
+        <section class="dashboard-section" id="dashboard-home" aria-labelledby="welcome-title">
+          <div class="dashboard-welcome">
+            <span class="eyebrow">Restaurant dashboard</span>
+            <h1 class="page-title" id="welcome-title">Welcome back, Restaurant Name</h1>
+            <p class="page-lede">Here’s a snapshot of your restaurant website. These preview values are sample data.</p>
+          </div>
+          <div class="dashboard-stat-grid" data-statistics></div>
+        </section>
+
+        <section class="dashboard-section" id="my-website" aria-labelledby="website-title">
+          <div class="dashboard-section-heading">
+            <div><span class="eyebrow">Your online presence</span><h2 id="website-title">My Website</h2></div>
+          </div>
+          <article class="value-card dashboard-website-card">
+            <div><h3>Restaurant Name</h3><p>Your restaurant website preview will appear here.</p></div>
+            <a class="button button-outline button-small" href="index.html">View Website <span aria-hidden="true">↗</span></a>
+          </article>
+        </section>
+
+        <section class="dashboard-section" id="menu-management" aria-labelledby="menu-title">
+          <div class="dashboard-section-heading">
+            <div><span class="eyebrow">Keep your offerings up to date</span><h2 id="menu-title">Menu Management</h2></div>
+            <button class="button button-small" type="button" data-preview-action="Adding menu items will be available when dashboard editing is connected.">Add Menu Item <span aria-hidden="true">+</span></button>
+          </div>
+          <div class="info-card dashboard-table-card">
+            <div class="dashboard-table-scroll">
+              <table class="dashboard-table">
+                <thead><tr><th scope="col">Image</th><th scope="col">Name</th><th scope="col">Category</th><th scope="col">Price</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+                <tbody data-menu-items></tbody>
+              </table>
+            </div>
+            <p class="dashboard-note" data-menu-notice aria-live="polite">Menu entries are sample data. Changes are not saved.</p>
+          </div>
+        </section>
+
+        <section class="dashboard-section" id="gallery-management" aria-labelledby="gallery-title">
+          <div class="dashboard-section-heading">
+            <div><span class="eyebrow">Show guests what’s on the table</span><h2 id="gallery-title">Gallery</h2></div>
+          </div>
+          <div class="dashboard-gallery-grid" data-gallery-items></div>
+          <p class="dashboard-note" data-gallery-notice aria-live="polite">Gallery images are sample data. Changes are not saved.</p>
+        </section>
+
+        <section class="dashboard-section" id="orders" aria-labelledby="orders-title">
+          <div class="dashboard-section-heading"><div><span class="eyebrow">Order management</span><h2 id="orders-title">Orders</h2></div><span class="catering-badge">Coming Soon</span></div>
+          <article class="info-card dashboard-placeholder"><h3>Order management is coming soon</h3><p>Order tools will be available in a future phase.</p></article>
+        </section>
+
+        <section class="dashboard-section" id="qr-code" aria-labelledby="qr-title">
+          <div class="dashboard-section-heading"><div><span class="eyebrow">Share your menu</span><h2 id="qr-title">QR Code</h2></div></div>
+          <article class="info-card dashboard-qr-card">
+            <div class="dashboard-qr-placeholder" role="img" aria-label="QR code placeholder, not a scannable code"><span>QR</span><small>Preview only</small></div>
+            <div><h3>Your restaurant QR code</h3><p>This is a placeholder, not a scannable QR code.</p><button class="button button-outline button-small" type="button" data-preview-action="QR code downloads will be available in a future phase.">Download QR Code</button></div>
+          </article>
+        </section>
+
+        <section class="dashboard-section" id="analytics" aria-labelledby="analytics-title">
+          <div class="dashboard-section-heading"><div><span class="eyebrow">Understand your reach</span><h2 id="analytics-title">Analytics</h2></div><span class="catering-badge">Coming Soon</span></div>
+          <article class="info-card dashboard-placeholder"><h3>Restaurant analytics are coming soon</h3><p>More detailed visitor and menu insights will be available in a future phase.</p></article>
+        </section>
+
+        <section class="dashboard-section" id="settings" aria-labelledby="settings-title">
+          <div class="dashboard-section-heading"><div><span class="eyebrow">Restaurant profile</span><h2 id="settings-title">Settings</h2></div></div>
+          <form class="info-card dashboard-settings-form" data-settings-form novalidate>
+            <div class="form-row">
+              <div class="field"><label for="settings-restaurant-name">Restaurant Name</label><input id="settings-restaurant-name" name="restaurantName" value="Restaurant Name"></div>
+              <div class="field"><label for="settings-whatsapp">WhatsApp Number</label><input id="settings-whatsapp" name="whatsapp" type="tel" value="+260 97 000 0000"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="settings-opening-hours">Business Hours — Opens</label><input id="settings-opening-hours" name="openingHours" type="time" value="08:00"></div>
+              <div class="field"><label for="settings-closing-hours">Business Hours — Closes</label><input id="settings-closing-hours" name="closingHours" type="time" value="21:00"></div>
+            </div>
+            <div class="field"><label for="settings-address">Address</label><input id="settings-address" name="address" value="Lusaka, Zambia"></div>
+            <div class="form-row">
+              <div class="field"><label for="settings-logo">Logo</label><input id="settings-logo" name="logo" type="file" accept="image/*"></div>
+              <div class="field"><label for="settings-cover-image">Cover Image</label><input id="settings-cover-image" name="coverImage" type="file" accept="image/*"></div>
+            </div>
+            <p class="dashboard-note" data-settings-notice aria-live="polite">Settings are preview-only and will not be saved.</p>
+            <button class="button" type="submit">Save Changes</button>
+          </form>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

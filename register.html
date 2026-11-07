@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#064e3b">
+  <meta name="description" content="Share your restaurant details to get started with a restaurant website.">
+  <title>Register Your Restaurant | QuickMenu Zambia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <script src="register.js" defer></script>
+</head>
+<body data-page="register">
+  <div class="announcement"><strong>Preview Mode:</strong> Custom menu, logo, and Chilanga Mulilo catering form ready for your restaurant in 24 hours.</div>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="QuickMenu Zambia home"><span class="brand-mark quickmenu-mark">Q<span>.</span></span><span><span class="brand-name">QuickMenu<span class="brand-accent">.</span></span><span class="brand-caption">ZAMBIA</span></span></a>
+      <nav class="nav-links" aria-label="Main navigation"><a href="index.html" data-nav-page="home">Home</a><a href="menu.html" data-nav-page="menu">Full Menu</a><a href="gallery.html" data-nav-page="gallery">Gallery</a><a href="contact.html" data-nav-page="contact">Contact</a><a href="pricing.html" data-nav-page="pricing">Pricing</a><a href="demo-restaurants.html" data-nav-page="demos">Demo Restaurants</a><a href="get-started.html" data-nav-page="get-started">Get Started</a><button class="nav-catering" type="button" data-catering-open>Book Catering</button></nav>
+      <div class="nav-actions"><button class="button button-outline button-small login-trigger" type="button" data-login-open><span data-login-label>Phone login</span></button><button class="tracker-nav-button" type="button" data-open-tracker hidden><span aria-hidden="true">⌖</span><span>Track Current Order</span></button><button class="nav-cart" type="button" data-open-cart aria-label="Open cart, 0 items"><span class="nav-cart-icon" aria-hidden="true">🛒</span><span class="nav-cart-copy"><strong>Cart <span class="nav-cart-count" data-cart-count>0</span></strong><small data-cart-total>K0 · 0 items</small></span></button><button class="mobile-toggle" type="button" data-mobile-toggle aria-label="Open navigation" aria-expanded="false"><span aria-hidden="true">☰</span></button></div>
+    </div>
+    <nav class="mobile-nav container" data-mobile-nav aria-label="Mobile navigation"><a href="index.html" data-nav-page="home"><span class="mobile-nav-icon" aria-hidden="true">⌂</span>Home</a><a href="menu.html" data-nav-page="menu"><span class="mobile-nav-icon" aria-hidden="true">▤</span>Full Menu</a><a href="gallery.html" data-nav-page="gallery"><span class="mobile-nav-icon" aria-hidden="true">▧</span>Gallery</a><a href="contact.html" data-nav-page="contact"><span class="mobile-nav-icon" aria-hidden="true">⌖</span>Contact</a><a href="pricing.html" data-nav-page="pricing"><span class="mobile-nav-icon" aria-hidden="true">$</span>Pricing</a><a href="demo-restaurants.html" data-nav-page="demos"><span class="mobile-nav-icon" aria-hidden="true">▧</span>Demo Restaurants</a><a href="get-started.html" data-nav-page="get-started"><span class="mobile-nav-icon" aria-hidden="true">→</span>Get Started</a><button class="button button-outline button-small" type="button" data-login-open><span data-login-label>Phone login</span></button></nav>
+  </header>
+  <main>
+    <section class="page-hero"><div class="container"><span class="eyebrow">Let’s get your restaurant online</span><h1 class="page-title">Tell us about your restaurant.</h1><p class="page-lede">Share your business details, choose a plan, and select the website features you need. This preview does not send or save your information.</p></div></section>
+    <section class="section" style="padding-top:25px">
+      <div class="container">
+        <form class="contact-stack" data-registration-form novalidate>
+          <section class="info-card" aria-labelledby="business-information-title">
+            <h2 id="business-information-title">Business Information</h2>
+            <div class="form-row">
+              <div class="field" data-validate="restaurantName"><label for="restaurant-name">Restaurant Name</label><input id="restaurant-name" name="restaurantName" autocomplete="organization" required aria-describedby="error-restaurantName"><p class="error-text" id="error-restaurantName" data-field-error hidden></p></div>
+              <div class="field" data-validate="ownerName"><label for="owner-name">Owner Name</label><input id="owner-name" name="ownerName" autocomplete="name" required aria-describedby="error-ownerName"><p class="error-text" id="error-ownerName" data-field-error hidden></p></div>
+            </div>
+            <div class="form-row">
+              <div class="field" data-validate="email"><label for="business-email">Email</label><input id="business-email" name="email" type="email" autocomplete="email" required aria-describedby="error-email"><p class="error-text" id="error-email" data-field-error hidden></p></div>
+              <div class="field" data-validate="phone"><label for="business-phone">Phone</label><input id="business-phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="error-phone"><p class="error-text" id="error-phone" data-field-error hidden></p></div>
+            </div>
+            <div class="field" data-validate="whatsapp"><label for="business-whatsapp">WhatsApp Number</label><input id="business-whatsapp" name="whatsapp" type="tel" autocomplete="tel" required aria-describedby="error-whatsapp"><p class="error-text" id="error-whatsapp" data-field-error hidden></p></div>
+          </section>
+
+          <section class="info-card" aria-labelledby="location-title">
+            <h2 id="location-title">Location</h2>
+            <div class="field" data-validate="address"><label for="business-address">Address</label><input id="business-address" name="address" autocomplete="street-address" required aria-describedby="error-address"><p class="error-text" id="error-address" data-field-error hidden></p></div>
+            <div class="form-row">
+              <div class="field" data-validate="city"><label for="business-city">City</label><input id="business-city" name="city" autocomplete="address-level2" required aria-describedby="error-city"><p class="error-text" id="error-city" data-field-error hidden></p></div>
+              <div class="field" data-validate="province"><label for="business-province">Province</label><select id="business-province" name="province" autocomplete="address-level1" required aria-describedby="error-province"><option value="">Select a province</option><option>Central</option><option>Copperbelt</option><option>Eastern</option><option>Luapula</option><option>Lusaka</option><option>Muchinga</option><option>Northern</option><option>North-Western</option><option>Southern</option><option>Western</option></select><p class="error-text" id="error-province" data-field-error hidden></p></div>
+            </div>
+          </section>
+
+          <section class="info-card" aria-labelledby="business-details-title">
+            <h2 id="business-details-title">Business Details</h2>
+            <div class="field" data-validate="cuisine"><label for="cuisine-type">Cuisine Type</label><select id="cuisine-type" name="cuisine" required aria-describedby="error-cuisine"><option value="">Select a cuisine type</option><option>Zambian</option><option>African</option><option>Fast food</option><option>Grill &amp; barbecue</option><option>Italian</option><option>Indian</option><option>Chinese</option><option>Café &amp; brunch</option><option>Seafood</option><option>Other</option></select><p class="error-text" id="error-cuisine" data-field-error hidden></p></div>
+            <div class="form-row">
+              <div class="field" data-validate="openingHours"><label for="opening-hours">Opening Hours</label><input id="opening-hours" name="openingHours" type="time" required aria-describedby="error-openingHours"><p class="error-text" id="error-openingHours" data-field-error hidden></p></div>
+              <div class="field" data-validate="closingHours"><label for="closing-hours">Closing Hours</label><input id="closing-hours" name="closingHours" type="time" required aria-describedby="error-closingHours"><p class="error-text" id="error-closingHours" data-field-error hidden></p></div>
+            </div>
+            <fieldset class="field" data-validate="deliveryAvailable" aria-describedby="error-deliveryAvailable" style="min-width:0;margin:0;padding:0;border:0">
+              <legend style="color:#435149;font-size:.71rem;font-weight:900">Delivery Available</legend>
+              <div class="form-row">
+                <label><input type="radio" name="deliveryAvailable" value="yes" required aria-describedby="error-deliveryAvailable" style="width:auto;min-height:0;padding:0;border:0;box-shadow:none;accent-color:var(--emerald-900)"> Yes</label>
+                <label><input type="radio" name="deliveryAvailable" value="no" required aria-describedby="error-deliveryAvailable" style="width:auto;min-height:0;padding:0;border:0;box-shadow:none;accent-color:var(--emerald-900)"> No</label>
+              </div>
+              <p class="error-text" id="error-deliveryAvailable" data-field-error hidden></p>
+            </fieldset>
+          </section>
+
+          <section class="info-card" aria-labelledby="branding-title">
+            <h2 id="branding-title">Branding</h2>
+            <div class="form-row">
+              <div class="field"><label for="restaurant-logo">Restaurant Logo</label><input id="restaurant-logo" name="logo" type="file" accept="image/*" aria-describedby="logo-help"><small class="notice" id="logo-help">Optional. Choose an image file.</small></div>
+              <div class="field"><label for="cover-image">Cover Image</label><input id="cover-image" name="coverImage" type="file" accept="image/*" aria-describedby="cover-help"><small class="notice" id="cover-help">Optional. Choose an image file.</small></div>
+            </div>
+          </section>
+
+          <section class="info-card" aria-labelledby="website-options-title">
+            <h2 id="website-options-title">Website Options</h2>
+            <div class="form-row">
+              <div class="field"><label><input type="checkbox" name="options" value="gallery" style="width:auto;min-height:0;padding:0;border:0;box-shadow:none;accent-color:var(--emerald-900)"> Gallery</label></div>
+              <div class="field"><label><input type="checkbox" name="options" value="qr-menu" style="width:auto;min-height:0;padding:0;border:0;box-shadow:none;accent-color:var(--emerald-900)"> QR Menu</label></div>
+              <div class="field"><label><input type="checkbox" name="options" value="google-maps" style="width:auto;min-height:0;padding:0;border:0;box-shadow:none;accent-color:var(--emerald-900)"> Google Maps</label></div>
+              <div class="field"><label><input type="checkbox" name="options" value="whatsapp-ordering" style="width:auto;min-height:0;padding:0;border:0;box-shadow:none;accent-color:var(--emerald-900)"> WhatsApp Ordering</label></div>
+              <div class="field"><label><input type="checkbox" name="options" value="contact-form" style="width:auto;min-height:0;padding:0;border:0;box-shadow:none;accent-color:var(--emerald-900)"> Contact Form</label></div>
+            </div>
+          </section>
+
+          <section class="info-card" aria-labelledby="plan-selection-title">
+            <h2 id="plan-selection-title">Plan Selection</h2>
+            <div class="cards-grid" data-validate="plan">
+              <article class="value-card"><label for="plan-starter"><input id="plan-starter" type="radio" name="plan" value="Starter" required aria-describedby="error-plan" style="width:auto;min-height:0;padding:0;border:0;box-shadow:none;accent-color:var(--emerald-900)"> <strong>Starter</strong></label><p>A simple start for your restaurant website.</p></article>
+              <article class="value-card"><label for="plan-business"><input id="plan-business" type="radio" name="plan" value="Business" required aria-describedby="error-plan" style="width:auto;min-height:0;padding:0;border:0;box-shadow:none;accent-color:var(--emerald-900)"> <strong>Business</strong></label><p>More ways to grow your online presence.</p></article>
+              <article class="value-card"><label for="plan-premium"><input id="plan-premium" type="radio" name="plan" value="Premium" required aria-describedby="error-plan" style="width:auto;min-height:0;padding:0;border:0;box-shadow:none;accent-color:var(--emerald-900)"> <strong>Premium</strong></label><p>A more complete digital presence.</p></article>
+            </div>
+            <p class="error-text" id="error-plan" data-field-error hidden></p>
+          </section>
+
+          <section class="info-card" aria-labelledby="terms-title">
+            <h2 id="terms-title">Terms</h2>
+            <div class="field" data-validate="terms"><label><input type="checkbox" name="terms" required aria-describedby="error-terms" style="width:auto;min-height:0;padding:0;border:0;box-shadow:none;accent-color:var(--emerald-900)"> I agree to the terms and conditions.</label><p class="error-text" id="error-terms" data-field-error hidden></p></div>
+          </section>
+          <p class="error-text" data-form-error role="alert" hidden>Please review the highlighted fields and try again.</p>
+          <button class="button" type="submit" style="width:100%;min-height:58px;font-size:1rem">Create My Restaurant Website</button>
+        </form>
+        <section class="info-card" data-registration-success role="status" aria-live="polite" tabindex="-1" hidden>
+          <h2>Your registration preview is complete</h2>
+          <p>Your restaurant information has been captured successfully.</p>
+          <p>Backend integration will be connected in the next phase.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><a class="brand" href="index.html"><span class="brand-mark">M</span><span><span class="brand-name">Mama's Kitchen</span><span class="brand-caption">Lusaka · Zambia</span></span></a><p>Thoughtful Zambian favourites and good things to share. Made fresh in Lusaka.</p></div>
+    <div><h2 class="footer-heading">Explore</h2><div class="footer-links"><a href="index.html">Home</a><a href="menu.html">Our menu</a><a href="gallery.html">Gallery</a><a href="contact.html">Visit & contact</a></div></div>
+    <div><h2 class="footer-heading">Say hello</h2><div class="footer-links"><a data-contact-phone href="https://wa.me/260970000000">+260 97 000 0000</a><span>Open daily · Lunch & dinner</span></div></div>
+  </div><div class="footer-bottom"><span>© <span data-year></span> Mama's Kitchen, Lusaka.</span><span>Good food. Good company.</span></div></div></footer>
+</body>
+</html>
