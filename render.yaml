@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: quickmenu-zambia
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input
+    startCommand: python manage.py migrate && gunicorn quickmenu_zambia.wsgi:application --bind 0.0.0.0:$PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.4
+      - key: DJANGO_DEBUG
+        value: "false"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: quickmenu-zambia-db
+          property: connectionString
+
+databases:
+  - name: quickmenu-zambia-db
+    databaseName: quickmenu_zambia
+    user: quickmenu_zambia
+    plan: basic-1gb

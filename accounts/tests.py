@@ -53,6 +53,8 @@ class OwnerAuthenticationTests(TestCase):
         self.assertEqual(dashboard_response.status_code, 200)
         self.assertEqual(dashboard_response.context["restaurant"], restaurant)
         self.assertContains(dashboard_response, "/static/style.css")
+        self.assertContains(dashboard_response, "/static/dashboard.css")
+        self.assertContains(dashboard_response, "/static/dashboard.js")
         self.assertEqual(self.client.get("/accounts/profile/").status_code, 200)
 
     def test_profile_requires_login_and_updates_user_fields(self):
@@ -106,3 +108,5 @@ class OwnerAuthenticationTests(TestCase):
 
         self.assertEqual(finders.find("dashboard.html", find_all=True), [])
         self.assertIsNotNone(finders.find("style.css"))
+        self.assertIsNotNone(finders.find("assets/complete-zambian-platter.jpg"))
+        self.assertIsNotNone(finders.find("script.js"))

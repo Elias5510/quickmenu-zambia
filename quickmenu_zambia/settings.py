@@ -11,16 +11,23 @@ if not SECRET_KEY:
         raise RuntimeError("DJANGO_SECRET_KEY must be configured when DEBUG is disabled.")
     SECRET_KEY = "development-only-quickmenu-zambia-key"
 
+render_hostname = os.environ.get("RENDER_EXTERNAL_HOSTNAME", "")
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,::1").split(",")
     if host.strip()
 ]
+if render_hostname and render_hostname not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(render_hostname)
 CSRF_TRUSTED_ORIGINS = [
     origin.strip()
     for origin in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
     if origin.strip()
 ]
+if render_hostname:
+    render_origin = f"https://{render_hostname}"
+    if render_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(render_origin)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -40,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -71,6 +79,25 @@ ASGI_APPLICATION = "quickmenu_zambia.asgi.application"
 
 
 def database_configuration():
+    database_url = os.environ.get("DATABASE_URL")
+    if database_url:
+        from urllib.parse import parse_qs, unquote, urlsplit
+
+        parsed = urlsplit(database_url)
+        if parsed.scheme not in {"postgres", "postgresql", "postgresql+psycopg"}:
+            raise RuntimeError("DATABASE_URL must use a PostgreSQL URL.")
+        query = parse_qs(parsed.query)
+        return {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": unquote(parsed.path.lstrip("/")),
+            "USER": unquote(parsed.username or ""),
+            "PASSWORD": unquote(parsed.password or ""),
+            "HOST": parsed.hostname or "",
+            "PORT": parsed.port or "",
+            "CONN_MAX_AGE": int(os.environ.get("DJANGO_DB_CONN_MAX_AGE", "60")),
+            "OPTIONS": {"sslmode": query.get("sslmode", ["prefer"])[0]},
+        }
+
     engine = os.environ.get("DJANGO_DB_ENGINE", "django.db.backends.sqlite3")
     if engine in {"postgres", "postgresql"}:
         engine = "django.db.backends.postgresql"
@@ -110,10 +137,21 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "core.staticfiles.FrontendStaticFinder",
-]
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+WHITENOISE_KEEP_ONLY_HASHED_FILES = False
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": (
+            "django.contrib.staticfiles.storage.StaticFilesStorage"
+            if DEBUG
+            else STATICFILES_STORAGE
+        ),
+    },
+}
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -139,6 +177,7 @@ CSRF_COOKIE_SAMESITE = "Lax"
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
 if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = os.environ.get("DJANGO_SECURE_SSL_REDIRECT", "true").lower() in {"1", "true", "yes"}
