@@ -1,0 +1,193 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#064e3b">
+  <meta name="description" content="Secure restaurant owner dashboard.">
+  <title>Restaurant Dashboard | QuickMenu Zambia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+  <script src="{% static 'script.js' %}" defer></script>
+  <script src="{% static 'dashboard.js' %}" defer></script>
+</head>
+<body class="dashboard-page"
+      data-restaurant-slug="{{ restaurant.slug }}"
+      data-menu-url="{% url 'dashboard:menu_save' %}"
+      data-menu-reorder-url="{% url 'dashboard:menu_reorder' %}"
+      data-category-url="{% url 'dashboard:category_create' %}"
+      data-gallery-url="{% url 'dashboard:gallery_upload' %}"
+      data-order-url="/dashboard/api/orders/"
+      data-settings-url="{% url 'dashboard:settings_update' %}"
+      data-dashboard-data-url="{% url 'dashboard:data' %}"
+      data-qr-url="{% url 'dashboard:qr_code' %}">
+  {{ dashboard_data|json_script:"dashboard-data" }}
+  <div class="dashboard-shell">
+    <button class="dashboard-backdrop" type="button" data-sidebar-backdrop aria-label="Close dashboard navigation" hidden></button>
+    <aside class="dashboard-sidebar" id="dashboard-sidebar" aria-label="Dashboard navigation" aria-hidden="false">
+      <div class="dashboard-sidebar-head">
+        <a class="brand dashboard-brand" href="index.html" aria-label="QuickMenu Zambia home"><span class="brand-mark quickmenu-mark">Q<span>.</span></span><span><span class="brand-name">QuickMenu<span class="brand-accent">.</span></span><span class="brand-caption">ZAMBIA</span></span></a>
+        <button class="button button-outline button-small dashboard-sidebar-close" type="button" data-sidebar-close aria-label="Close dashboard navigation">×</button>
+      </div>
+      <nav class="dashboard-nav" aria-label="Restaurant dashboard">
+        <a class="dashboard-nav-link active" href="#dashboard-home" aria-current="page"><span aria-hidden="true">⌂</span>Dashboard</a>
+        <a class="dashboard-nav-link" href="#my-website"><span aria-hidden="true">↗</span>My Website</a>
+        <a class="dashboard-nav-link" href="#menu-management"><span aria-hidden="true">▤</span>Menu</a>
+        <a class="dashboard-nav-link" href="#gallery-management"><span aria-hidden="true">▧</span>Gallery</a>
+        <a class="dashboard-nav-link" href="#orders"><span aria-hidden="true">▣</span>Orders</a>
+        <a class="dashboard-nav-link" href="#qr-code"><span aria-hidden="true">▦</span>QR Code</a>
+        <a class="dashboard-nav-link" href="#analytics"><span aria-hidden="true">▥</span>Analytics</a>
+        <a class="dashboard-nav-link" href="#settings"><span aria-hidden="true">⚙</span>Settings</a>
+      </nav>
+      <form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button class="dashboard-nav-link dashboard-logout" type="submit"><span aria-hidden="true">↪</span>Logout</button></form>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button class="button button-outline button-small dashboard-menu-toggle" type="button" data-sidebar-toggle aria-controls="dashboard-sidebar" aria-expanded="false" aria-label="Open dashboard navigation"><span aria-hidden="true">☰</span></button>
+        <a class="dashboard-mobile-brand" href="index.html">QuickMenu<span>.</span> <small>ZAMBIA</small></a>
+        <span class="dashboard-preview-label">Restaurant Admin</span>
+      </header>
+
+      <main class="dashboard-content">
+        <p class="dashboard-note dashboard-global-notice" data-dashboard-notice aria-live="polite" hidden></p>
+        <section class="dashboard-section" id="dashboard-home" aria-labelledby="welcome-title">
+          <div class="dashboard-welcome">
+            <span class="eyebrow">Restaurant dashboard</span>
+            <h1 class="page-title" id="welcome-title">Welcome back, <span data-restaurant-name>{{ restaurant.business_name }}</span></h1>
+            <p class="page-lede">Manage your restaurant website, menu, gallery and orders from one place. Restaurant profile changes are saved securely.</p>
+          </div>
+          <div class="dashboard-stat-grid" data-statistics></div>
+        </section>
+
+        <section class="dashboard-section" id="my-website" aria-labelledby="website-title">
+          <div class="dashboard-section-heading">
+            <div><span class="eyebrow">Your online presence</span><h2 id="website-title">My Website</h2></div>
+          </div>
+          <form class="info-card dashboard-settings-form" data-website-form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-row">
+            <div class="field"><label for="website-name">Restaurant name</label><input id="website-name" name="business_name" value="{{ profile_form.business_name.value|default_if_none:'' }}" required maxlength="80">{% for error in profile_form.business_name.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+            <div class="field"><label for="website-phone">Phone number</label><input id="website-phone" name="phone" type="tel" autocomplete="tel" value="{{ profile_form.phone.value|default_if_none:'' }}">{% for error in profile_form.phone.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+            <div class="field"><label for="website-whatsapp">WhatsApp number</label><input id="website-whatsapp" name="whatsapp" type="tel" value="{{ profile_form.whatsapp.value|default_if_none:'' }}">{% for error in profile_form.whatsapp.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+            <div class="field"><label for="website-email">Email</label><input id="website-email" name="email" type="email" autocomplete="email" value="{{ profile_form.email.value|default_if_none:'' }}">{% for error in profile_form.email.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+          </div>
+          <div class="field"><label for="website-description">Restaurant description</label><textarea id="website-description" name="description" maxlength="500">{{ profile_form.description.value|default_if_none:'' }}</textarea>{% for error in profile_form.description.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+          <div class="form-row">
+            <div class="field"><label for="website-opening">Opens</label>{{ profile_form.opening_time }}{% for error in profile_form.opening_time.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+            <div class="field"><label for="website-closing">Closes</label>{{ profile_form.closing_time }}{% for error in profile_form.closing_time.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+            <div class="field"><label for="website-location">Location / address</label><input id="website-location" name="address" maxlength="180" value="{{ profile_form.address.value|default_if_none:'' }}">{% for error in profile_form.address.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="website-instagram">Instagram URL</label><input id="website-instagram" name="instagram" type="url" placeholder="https://instagram.com/..." value="{{ profile_form.instagram.value|default_if_none:'' }}">{% for error in profile_form.instagram.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+            <div class="field"><label for="website-facebook">Facebook URL</label><input id="website-facebook" name="facebook" type="url" placeholder="https://facebook.com/..." value="{{ profile_form.facebook.value|default_if_none:'' }}">{% for error in profile_form.facebook.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+            <div class="field"><label for="website-theme">Theme color</label><input id="website-theme" name="theme_color" type="color" value="{{ profile_form.theme_color.value|default_if_none:'#f97316' }}">{% for error in profile_form.theme_color.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="website-logo">Restaurant logo</label><input id="website-logo" name="logo" type="file" accept="image/*">{% for error in profile_form.logo.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+            <div class="field"><label for="website-hero">Hero image</label><input id="website-hero" name="hero_image" type="file" accept="image/*">{% for error in profile_form.hero_image.errors %}<span class="dashboard-error">{{ error }}</span>{% endfor %}</div>
+          </div>
+          <p class="dashboard-note" data-website-notice aria-live="polite">{% for message in messages %}{{ message }}{% endfor %}</p>
+          <div class="dashboard-form-actions"><button class="button" type="submit">Save website</button><a class="button button-outline" href="{% url 'core:restaurant_home' restaurant.slug %}" target="_blank" rel="noopener">Preview website <span aria-hidden="true">↗</span></a></div>
+          </form>
+        </section>
+
+        <section class="dashboard-section" id="menu-management" aria-labelledby="menu-title">
+          <div class="dashboard-section-heading">
+            <div><span class="eyebrow">Keep your offerings up to date</span><h2 id="menu-title">Menu Management</h2></div>
+            <button class="button button-small" type="button" data-menu-add>Add Menu Item <span aria-hidden="true">+</span></button>
+          </div>
+          <form class="info-card dashboard-editor-form" data-menu-form hidden>
+            <h3 data-menu-form-title>Add menu item</h3>
+            <input type="hidden" name="id">
+            <div class="form-row">
+              <div class="field"><label for="menu-name">Item name</label><input id="menu-name" name="name" required maxlength="80"></div>
+              <div class="field"><label for="menu-category">Category</label><select id="menu-category" name="category" required>{% for category in categories %}<option value="{{ category.id }}">{{ category.name }}</option>{% endfor %}</select></div>
+              <div class="field"><label for="menu-price">Price (K)</label><input id="menu-price" name="price" type="number" min="0" step="0.01" required></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="menu-description">Description</label><input id="menu-description" name="description" maxlength="180"></div>
+              <div class="field"><label for="menu-image">Food photo</label><input id="menu-image" name="photo" type="file" accept="image/*"></div>
+            </div>
+            <div class="dashboard-check-row">
+              <label><input name="available" type="checkbox" checked> Available</label>
+              <label><input name="special_offer" type="checkbox"> Special offer</label>
+              <label><input name="featured" type="checkbox"> Featured item</label>
+            </div>
+            <div class="dashboard-form-actions"><button class="button" type="submit">Save item</button><button class="button button-outline" type="button" data-menu-cancel>Cancel</button></div>
+          </form>
+          <form class="info-card dashboard-settings-form" data-category-form>
+            <div class="field"><label for="category-name">Add menu category</label><input id="category-name" name="name" maxlength="100" required></div>
+            <button class="button button-outline" type="submit">Add category</button>
+            <p class="dashboard-note" data-category-notice aria-live="polite"></p>
+            <div class="dashboard-form-actions" data-categories></div>
+          </form>
+          <div class="info-card dashboard-table-card">
+            <div class="dashboard-table-scroll">
+              <table class="dashboard-table">
+                <thead><tr><th scope="col">Image</th><th scope="col">Name</th><th scope="col">Category</th><th scope="col">Price</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+                <tbody data-menu-items></tbody>
+              </table>
+            </div>
+            <p class="dashboard-note" data-menu-notice aria-live="polite"></p>
+          </div>
+        </section>
+
+        <section class="dashboard-section" id="gallery-management" aria-labelledby="gallery-title">
+          <div class="dashboard-section-heading">
+            <div><span class="eyebrow">Show guests what’s on the table</span><h2 id="gallery-title">Gallery</h2></div>
+            <button class="button button-small dashboard-upload-button" type="button" data-gallery-open>Upload images <span aria-hidden="true">+</span></button>
+            <label class="field" for="gallery-category"><span class="dashboard-sr-only">Gallery image category</span><select id="gallery-category" data-gallery-category><option value="food">Food</option><option value="drinks">Drinks &amp; Cocktails</option><option value="ambiance">Ambiance</option></select></label>
+            <input id="gallery-upload" type="file" accept="image/*" multiple hidden data-gallery-upload>
+          </div>
+          <div class="dashboard-gallery-grid" data-gallery-items></div>
+          <p class="dashboard-note" data-gallery-notice aria-live="polite"></p>
+        </section>
+
+        <section class="dashboard-section" id="orders" aria-labelledby="orders-title">
+          <div class="dashboard-section-heading"><div><span class="eyebrow">Order management</span><h2 id="orders-title">Orders</h2></div></div>
+          <p class="dashboard-note">Orders submitted by customers appear here.</p>
+          <div class="dashboard-order-stats" data-order-stats></div>
+          <div class="dashboard-order-tools">
+            <div class="field"><label for="order-search">Search orders</label><input id="order-search" type="search" placeholder="Order ID or customer" data-order-search></div>
+            <div class="field"><label for="order-filter">Filter by status</label><select id="order-filter" data-order-filter><option value="all">All orders</option><option value="pending">Pending</option><option value="preparing">Preparing</option><option value="ready">Ready</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select></div>
+          </div>
+          <div class="info-card dashboard-table-card"><div class="dashboard-table-scroll"><table class="dashboard-table"><thead><tr><th scope="col">Order</th><th scope="col">Customer</th><th scope="col">Items</th><th scope="col">Total</th><th scope="col">Status</th><th scope="col">Update status</th></tr></thead><tbody data-orders></tbody></table></div><p class="dashboard-note" data-orders-notice aria-live="polite"></p></div>
+        </section>
+
+        <section class="dashboard-section" id="qr-code" aria-labelledby="qr-title">
+          <div class="dashboard-section-heading"><div><span class="eyebrow">Share your menu</span><h2 id="qr-title">QR Code</h2></div></div>
+          <article class="info-card dashboard-qr-card">
+            <div class="dashboard-qr-placeholder" data-qr-preview role="img" aria-label="QR code preview"><span>QR</span><small>Select a destination</small></div>
+            <div><h3>Your restaurant QR code</h3><p data-qr-description>Scan to open your restaurant website.</p><label class="field" for="qr-destination">QR destination</label><select id="qr-destination" data-qr-target><option value="website">Restaurant website</option><option value="menu">Restaurant menu</option></select><div class="dashboard-form-actions"><a class="button button-outline button-small" href="{% url 'dashboard:qr_code' %}" data-qr-download>Download QR Code</a></div></div>
+          </article>
+          <p class="dashboard-note" data-qr-notice aria-live="polite" hidden></p>
+        </section>
+
+        <section class="dashboard-section" id="analytics" aria-labelledby="analytics-title">
+          <div class="dashboard-section-heading"><div><span class="eyebrow">Understand your reach</span><h2 id="analytics-title">Analytics</h2></div></div>
+          <div class="dashboard-stat-grid dashboard-analytics-grid" data-analytics></div>
+          <div class="info-card dashboard-chart-card"><h3>Completed revenue · last 7 days</h3><div data-revenue-chart></div></div>
+          <p class="dashboard-note">Order and visit metrics are calculated from your restaurant data.</p>
+        </section>
+
+        <section class="dashboard-section" id="settings" aria-labelledby="settings-title">
+          <div class="dashboard-section-heading"><div><span class="eyebrow">Your dashboard preferences</span><h2 id="settings-title">Settings</h2></div></div>
+          <form class="info-card dashboard-settings-form" data-settings-form data-language="{{ restaurant.preferred_language }}" data-notifications="{{ restaurant.notifications_enabled|yesno:'true,false' }}">
+            <div class="field"><label for="settings-language">Language</label><select id="settings-language" name="language"><option>English</option><option>Bemba</option><option>Nyanja</option></select></div>
+            <div class="dashboard-check-row"><label><input name="notifications" type="checkbox"> Enable dashboard notifications</label></div>
+            <div class="field"><label for="settings-old-password">Current password</label><input id="settings-old-password" name="old_password" type="password" autocomplete="current-password"></div>
+            <div class="field"><label for="settings-password">New password</label><input id="settings-password" name="password" type="password" autocomplete="new-password" minlength="8"></div>
+            <div class="field"><label for="settings-password-confirm">Confirm new password</label><input id="settings-password-confirm" name="password_confirm" type="password" autocomplete="new-password" minlength="8"></div>
+            <p class="dashboard-note" data-settings-notice aria-live="polite"></p>
+            <button class="button" type="submit">Save preferences</button>
+          </form>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

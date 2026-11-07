@@ -1,0 +1,20 @@
+{% extends "accounts/base.html" %}
+{% block title %}Owner login | QuickMenu Zambia{% endblock %}
+{% block heading %}Welcome back.{% endblock %}
+{% block content %}
+  <form class="info-card contact-stack" method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="error-text" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+    {% for field in form %}
+      <div class="field">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% for error in field.errors %}<p class="error-text">{{ error }}</p>{% endfor %}
+      </div>
+    {% endfor %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button class="button" type="submit">Log in</button>
+    <p><a class="text-link" href="{% url 'accounts:password_reset' %}">Forgot your password?</a></p>
+    <p>New to QuickMenu? <a class="text-link" href="{% url 'accounts:register' %}">Create an owner account</a></p>
+  </form>
+{% endblock %}

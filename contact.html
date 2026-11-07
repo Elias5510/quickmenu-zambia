@@ -1,4 +1,4 @@
-<!doctype html>
+{% load static %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -6,13 +6,15 @@
   <meta name="theme-color" content="#064e3b">
   <meta name="description" content="Visit Mama's Kitchen in Lusaka or arrange delivery to Mass Media, CBD, Rhodes Park, Woodlands and nearby areas.">
   <title>Visit & Contact | Mama's Kitchen Lusaka</title>
+  {% if restaurant_data %}<base href="/">{% endif %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <script src="{% static 'script.js' %}" defer></script>
 </head>
 <body data-page="contact">
+  {% if restaurant_data %}{{ restaurant_data|json_script:"restaurant-data" }}{% endif %}
   <div class="announcement"><strong>Preview Mode:</strong> Custom menu, logo, and Chilanga Mulilo catering form ready for your restaurant in 24 hours.</div>
   <header class="site-header">
     <div class="container nav-wrap">
@@ -30,8 +32,9 @@
           <article class="info-card"><h2>Find us & get in touch</h2>
             <div class="contact-line"><span class="contact-icon">⌖</span><span><strong>Mama's Kitchen, Lusaka</strong><small>Cairo Road & Great East Road Junction<br>Lusaka, Zambia</small></span></div>
             <div class="contact-line"><span class="contact-icon">◉</span><span><strong>WhatsApp & phone</strong><small><a data-contact-phone href="https://wa.me/260970000000">+260 97 000 0000</a> · Orders and enquiries</small></span></div>
+            <div class="contact-line" data-email-line hidden><span class="contact-icon">✉</span><span><strong>Email</strong><small><a data-contact-email></a></small></span></div>
             <div class="contact-line"><span class="contact-icon">◷</span><span><strong>Open daily</strong><small>Lunch & dinner, every day</small></span></div>
-            <p class="notice">The demo WhatsApp number is a placeholder. Update the number in script.js before taking live orders.</p>
+            <p class="notice">Restaurant contact details can be updated by the owner from the dashboard.</p>
           </article>
           <article class="info-card"><h3>Delivery around Lusaka</h3><div class="zone-list"><span class="zone-pill">Lusaka CBD</span><span class="zone-pill">Mass Media</span><span class="zone-pill">Rhodes Park</span><span class="zone-pill">Woodlands</span><span class="zone-pill">Kamwala</span><span class="zone-pill">Roma / Foxdale</span></div><p class="notice">Share your GPS pin in the basket for precise delivery directions.</p></article>
           <article class="info-card"><h3>Opening hours</h3><div class="hours-row"><span>Monday – Friday</span><strong>08:00 – 21:00</strong></div><div class="hours-row"><span>Saturday</span><strong>08:30 – 22:00</strong></div><div class="hours-row"><span>Sunday</span><strong>09:00 – 20:00</strong></div></article>

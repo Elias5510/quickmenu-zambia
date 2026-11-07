@@ -1,4 +1,4 @@
-<!doctype html>
+{% load static %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -6,13 +6,15 @@
   <meta name="theme-color" content="#064e3b">
   <meta name="description" content="Explore rice specials, Zambian Nshima feasts, burgers, cocktails and local drinks at Mama's Kitchen, Lusaka.">
   <title>Our Menu | Mama's Kitchen Lusaka</title>
+  {% if restaurant_data %}<base href="/">{% endif %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <script src="{% static 'script.js' %}" defer></script>
 </head>
 <body data-page="menu">
+  {% if restaurant_data %}{{ restaurant_data|json_script:"restaurant-data" }}{% endif %}
   <div class="announcement"><strong>Preview Mode:</strong> Custom menu, logo, and Chilanga Mulilo catering form ready for your restaurant in 24 hours.</div>
   <header class="site-header">
     <div class="container nav-wrap">

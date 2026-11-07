@@ -1,0 +1,32 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#064e3b">
+  <title>{% block title %}Owner account | QuickMenu Zambia{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="/" aria-label="QuickMenu Zambia home">
+        <span class="brand-mark quickmenu-mark">Q<span>.</span></span>
+        <span><span class="brand-name">QuickMenu<span class="brand-accent">.</span></span><span class="brand-caption">ZAMBIA</span></span>
+      </a>
+      <a class="button button-outline button-small" href="/">Back to website</a>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container" style="max-width: 620px">
+      <span class="eyebrow">Restaurant owner account</span>
+      <h1 class="page-title">{% block heading %}QuickMenu Zambia{% endblock %}</h1>
+      {% for message in messages %}<p class="notice">{{ message }}</p>{% endfor %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+</body>
+</html>

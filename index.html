@@ -1,4 +1,4 @@
-<!doctype html>
+{% load static %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -6,13 +6,15 @@
   <meta name="theme-color" content="#064e3b">
   <meta name="description" content="Discover refined Zambian favourites at Mama's Kitchen. Fresh Nshima, rice specials and Lusaka-wide delivery.">
   <title>Mama's Kitchen | Lusaka, Zambia</title>
+  {% if restaurant_data %}<base href="/">{% endif %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <script src="{% static 'script.js' %}" defer></script>
 </head>
 <body data-page="home">
+  {% if restaurant_data %}{{ restaurant_data|json_script:"restaurant-data" }}{% endif %}
   <div class="announcement"><strong>Preview Mode:</strong> Custom menu, logo, and Chilanga Mulilo catering form ready for your restaurant in 24 hours.</div>
   <header class="site-header">
     <div class="container nav-wrap">
@@ -46,12 +48,12 @@
             <span class="motto-badge">Lusaka's #1 Digital Menu &amp; Delivery Platform</span>
             <p>QuickMenu Zambia: Fresh Food, Fast Workplace Delivery, and Unforgettable Traditional Events.</p>
           </div>
-          <p>From slow-simmered Zambian favourites to bright, fresh cocktails, discover food made with heart and delivered with care across Lusaka.</p>
+          <p data-restaurant-description>From slow-simmered Zambian favourites to bright, fresh cocktails, discover food made with heart and delivered with care across Lusaka.</p>
           <div class="hero-actions"><a class="button button-orange" href="menu.html">Explore the menu <span aria-hidden="true">→</span></a><a class="button button-outline" href="contact.html">Find us in Lusaka</a></div>
           <div class="hero-proof"><span class="proof-avatars" aria-hidden="true"><span>CM</span><span>BK</span><span>MP</span></span><span><span class="proof-stars">★★★★★</span><br>Beloved by Lusaka, one meal at a time</span></div>
         </div>
         <div class="hero-visual">
-          <div class="hero-photo image-crop"><img src="assets/complete-zambian-platter.jpg" alt="A traditional Zambian feast with fried bream, white and millet Nshima, leafy relishes, beans and gravy"></div>
+          <div class="hero-photo image-crop"><img src="{% static 'assets/complete-zambian-platter.jpg' %}" alt="A traditional Zambian feast with fried bream, white and millet Nshima, leafy relishes, beans and gravy"></div>
           <div class="hero-stamp"><strong>4.9</strong><span>guest rating</span></div>
           <div class="hero-float"><span class="float-rating">★★★★★ &nbsp; Loved locally</span><strong>Made for good company.</strong><span>Freshly prepared, right here in Lusaka.</span></div>
         </div>
